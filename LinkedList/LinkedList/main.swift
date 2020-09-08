@@ -22,10 +22,10 @@ public enum ErrorStatus {
     case OK
 }
 
-// MARK: - 链表节点
-class LinkedListNode<T> {
+// MARK: - 单链表节点(默认含头节点)
+class SingleLinkedListNode<T> {
     var data: T?
-    var next: LinkedListNode?
+    var next: SingleLinkedListNode?
     init(_ data: T) {
         self.data = data
     }
@@ -40,12 +40,11 @@ class LinkedListNode<T> {
 class SingleLinkedList<T> {
     
     // 节点别名
-    public typealias Node = LinkedListNode<T>
+    public typealias Node = SingleLinkedListNode<T>
     
     // 头节点不存储任何信息或存储线性表长度等附加信息
     // 头节点指针域指向第一个节点
-    var head: Node? = LinkedListNode()
-    var tail: Node? = LinkedListNode()
+    var head: Node?
     
     // 链表长度
     private(set) var count = 0
@@ -55,19 +54,20 @@ class SingleLinkedList<T> {
     func insert(atHead newData: T) {
         if head == nil {
             head = Node()
-            tail = head
-        } else {
-            let newNode = Node(newData)
-            newNode.next = head?.next
-            head?.next = newNode
-            tail = newNode.next
         }
+        
+        let newNode = Node(newData)
+        newNode.next = head?.next
+        head?.next = newNode
+        
         count += 1
     }
     
     /// 单链表创建：尾插法
     /// - Parameter newData: 链表数据域
     func insert(atTail newData: T) {
+        var tail: Node? = getNode(at: count).0 // 尾查法用于只利用尾插法创建单链表时，若结合头插法需要遍历查到尾节点，时间复杂度为O(n)
+
         if head == nil {
             head = Node()
             tail = head
@@ -164,12 +164,157 @@ class SingleLinkedList<T> {
     
 }
 
-let list = SingleLinkedList<Int>()
-list.insert(atHead: 1)
-list.insert(atHead: 2)
-list.insert(atTail: 3)
-list.insert(node: 666, at: 4)
-list.removeNode(at: 4)
-list.printAllNodes()
+//let list = SingleLinkedList<Int>()
+//list.insert(atHead: 1)
+//list.insert(atHead: 2)
+//list.insert(atTail: 3)
+//list.insert(atTail: 999)
+//list.insert(atHead: 666)
+//list.removeNode(at: 4)
+//list.printAllNodes()
 
 
+// MARK: - 双链表节点(默认含头节点)
+class DoubleLinkedNode<T> {
+    var data: T?
+    var next: DoubleLinkedNode<T>?
+    var pre: DoubleLinkedNode<T>?
+    
+    init() {
+        self.data = nil
+        self.next = nil
+        self.pre = nil
+    }
+    
+    init(data: T) {
+        self.data = data
+    }
+}
+
+class DoubleLinkedList<T> {
+    
+    public typealias Node = DoubleLinkedNode<T>
+    
+    var head: Node?
+    var tail: Node?
+    
+    /// 双链表创建：头插法
+    /// - Parameter newData: 信息
+    func append(atHead newData: T) {
+        if (head == nil) {
+            head = DoubleLinkedNode()
+        }
+        
+        let newNode = DoubleLinkedNode(data: newData)
+        newNode.next = head?.next
+        newNode.pre = head
+        head?.next?.pre = newNode
+        head?.next = newNode
+        
+    }
+    
+    
+    /// 双链表查找
+    /// - Parameter index: 下标
+    /// - Returns: 错误信息
+    func getNode(at index: Int) -> (Node?, ErrorStatus) {
+        var point = head?.next // 指针
+        var j = 1 // 计数器
+        while ((point != nil && (j < index))) {
+            point = point?.next
+            j += 1
+        }
+        
+        if (point == nil) {
+            return (nil, .Error(message: "\(index)超过界限"))
+        }
+        
+        return (point, .OK)
+        
+    }
+    
+    /// 双链表插入
+    /// - Parameters:
+    ///   - data: 插入节点数据域
+    ///   - index: 下标
+    /// - Returns: 节点和错误信息
+    func insert(node data: T, at index: Int) -> (Node?,ErrorStatus) {
+        if (head == nil) {
+            head = DoubleLinkedNode()
+        }
+        
+        var point = head // 指针(节点插在指针之后)
+        var j = 1 // 计数器
+        
+        while (point != nil && j < index) {
+            point = point?.next
+            j += 1
+        }
+        
+        if (point == nil) {
+            return (nil, .Error(message: "\(index)超过界限"))
+        }
+        
+        var newNode = Node(data: data)
+        newNode.pre = point
+        newNode.next = point?.next
+        point?.next?.pre = newNode
+        point?.next = newNode
+        
+        return (newNode, .OK)
+    }
+    
+    /// 双链表删除
+    /// - Parameter index: 下标
+    /// - Returns: 错误信息
+    func deleteNode(at index: Int) -> ErrorStatus {
+        var point = head // 指针(删除节点的前一个节点)
+        var j = 1 // 计数器
+        
+        while (point != nil && j < index) {
+            point = point?.next
+            j += 1
+        }
+        
+        if (point == nil) {
+            return .Error(message: "\(index)超过界限")
+        }
+        
+        var deleteNode = point?.next
+        point?.next = deleteNode?.next
+        deleteNode?.next?.pre = point
+        deleteNode?.next = nil
+        deleteNode?.pre = nil
+        deleteNode = nil
+        
+        return .OK
+        
+    }
+    
+    /// 打印所有链表数据
+    func printAllNodes() {
+        print("--------------------------------")
+        var node = head
+        while node != nil {
+            print(node?.data as Any)
+            node = node?.next
+        }
+//        print("--------------------------------")
+//        node = node?.pre
+//        while node != nil {
+//            print(node?.data as Any)
+//            node = node?.pre
+//        }
+        
+    }
+    
+    
+}
+
+let doubleList = DoubleLinkedList<String>()
+doubleList.append(atHead: "1")
+doubleList.insert(node: "8", at: 2)
+doubleList.append(atHead: "99")
+doubleList.deleteNode(at: 1)
+doubleList.deleteNode(at: 2)
+doubleList.printAllNodes()
