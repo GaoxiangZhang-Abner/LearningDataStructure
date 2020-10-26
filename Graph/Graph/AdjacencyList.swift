@@ -11,6 +11,8 @@ import Foundation
 final class AdjacencyList<Element> {
     private var adjacencies: [Vertex<Element>: [Edge<Element>]] = [:]
     init() {}
+    
+    var visited: [Bool] = []
 }
 
 // Graph协议
@@ -54,4 +56,30 @@ extension AdjacencyList: CustomStringConvertible {
         }
         return result
     }
+}
+
+// MARK: - 广度优先遍历(和Matrix一样)
+extension AdjacencyList {
+    
+    func breathFirstSearch(from source: Vertex<Element>) -> [Vertex<Element>] {
+        
+        let queue = Queue<Vertex<Element>>()
+        var enqueued = Set<Vertex<Element>>() // 没有顺序
+        var visited = [Vertex<Element>]()
+        
+        queue.enqueue(source)
+        enqueued.insert(source)
+        
+        while let vertex = queue.dequeue() {
+            visited.append(vertex)
+            let neighborEdges = edges(from: vertex)
+            for edge in neighborEdges where !enqueued.contains(edge.destination) {
+                queue.enqueue(edge.destination)
+                enqueued.insert(edge.destination)
+            }
+        }
+        
+        return visited
+    }
+    
 }

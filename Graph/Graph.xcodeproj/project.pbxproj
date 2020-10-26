@@ -13,6 +13,8 @@
 		077A3F402544F8C700399C3F /* GraphProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077A3F3F2544F8C700399C3F /* GraphProtocol.swift */; };
 		077A3F432545521600399C3F /* AdjacencyMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077A3F422545521600399C3F /* AdjacencyMatrix.swift */; };
 		077A3F462545525700399C3F /* AdjacencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077A3F452545525700399C3F /* AdjacencyList.swift */; };
+		077A3F4A254668F300399C3F /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077A3F49254668F300399C3F /* Stack.swift */; };
+		077A3F4E25469F9600399C3F /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077A3F4D25469F9600399C3F /* Queue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +37,8 @@
 		077A3F3F2544F8C700399C3F /* GraphProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphProtocol.swift; sourceTree = "<group>"; };
 		077A3F422545521600399C3F /* AdjacencyMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjacencyMatrix.swift; sourceTree = "<group>"; };
 		077A3F452545525700399C3F /* AdjacencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjacencyList.swift; sourceTree = "<group>"; };
+		077A3F49254668F300399C3F /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		077A3F4D25469F9600399C3F /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 				077A3F392544F68D00399C3F /* Vertex.swift */,
 				077A3F3C2544F69800399C3F /* Edge.swift */,
 				077A3F3F2544F8C700399C3F /* GraphProtocol.swift */,
+				077A3F4D25469F9600399C3F /* Queue.swift */,
+				077A3F49254668F300399C3F /* Stack.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -136,6 +142,8 @@
 			files = (
 				077A3F462545525700399C3F /* AdjacencyList.swift in Sources */,
 				077A3F322544F37200399C3F /* main.swift in Sources */,
+				077A3F4A254668F300399C3F /* Stack.swift in Sources */,
+				077A3F4E25469F9600399C3F /* Queue.swift in Sources */,
 				077A3F432545521600399C3F /* AdjacencyMatrix.swift in Sources */,
 				077A3F3A2544F68D00399C3F /* Vertex.swift in Sources */,
 				077A3F402544F8C700399C3F /* GraphProtocol.swift in Sources */,
